@@ -7,7 +7,13 @@ export default function TeaList({ teas, onDelete }) {
   }
   // if we have teas then loop over each tea and render a tea card
   return (
-    <div className='tea-list'>
+    <div style={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: '1rem',
+        justifyContent: 'center'
+      }}
+      >
       {teas.map((tea) => (
         // transforms each object into react element
         <TeaCard key={tea.id} tea={tea} onDelete={onDelete} />

@@ -1,5 +1,6 @@
 import React from 'react';
 export default function TeaCard({ tea, onDelete }) {
+  
   const {
     id,
     name,
@@ -13,9 +14,30 @@ export default function TeaCard({ tea, onDelete }) {
   return (
     <div
       className='tea-card'
-      style={color ? { borderColor: color } : undefined}
-    >
-      {image && <img src={image} alt={name} className='tea-card__image' />}
+  style={{
+    backgroundColor: color,
+    padding: '1rem',
+    border: '2px solid #ccc',
+    borderRadius: '20px 20px 5px 5px',
+    boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+    width: '250px',
+    margin: '1rem auto',
+    position: 'relative',
+    ...(color ? { borderColor: color } : {})
+  }}
+>
+      {image && <img
+  src={image}
+  alt={name}
+  style={{
+    width: '100%',
+    height: '150',
+    objectFit: 'cover',
+    display: 'block',
+    borderRadius: '10px',
+    marginBottom: '0.5rem'
+  }}
+/>}
       <h3 className='tea-card__name'>{name}</h3>
       <p className='tea-card__origin'>
         <strong>Origin:</strong> {origin}
