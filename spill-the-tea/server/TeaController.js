@@ -21,9 +21,10 @@ const TeaController = {};
 // };
 
 TeaController.createTea = async (req, res, next) => {
-  const { name, origin, caffeineLevel, image, type, description, color } = req.body;
-  console.log(req.body);
-  console.log("name",name)
+  const { name, origin, caffeineLevel, image, type, description, color } =
+    req.body;
+  //console.log(req.body);
+  //console.log("name",name)
   const newTea = await Tea.create({
     name: name,
     origin: origin,
@@ -32,10 +33,11 @@ TeaController.createTea = async (req, res, next) => {
     type: type,
     description: description,
     color: color,
-  })
+  });
+  console.log('newTea', newTea);
   res.locals.teas = newTea;
-  console.log(res.locals.teas)
+  //console.log(res.locals.teas)
   return next();
-}
+};
 
 module.exports = TeaController;

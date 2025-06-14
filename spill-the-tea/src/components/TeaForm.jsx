@@ -2,12 +2,13 @@
 import React, { Component } from 'react';
 import { useState, useEffect } from 'react';
 
-const TeaForm = (props) => {
+const TeaForm = ({ teas, addTea }) => {
+  if (!teas) teas = [];
   // useEffect(() => {
   //   fetch('http://localhost:3000/cards', {
   //     method: 'POST',
   //     headers: { 'Content-Type:': 'application/json' },
-  //     body: JSON.stringify(teaInfo)
+  //     body: JSON.stringify(teaInfo),
   //   })
   //     .then((res) => {
   //       return res.json();
@@ -21,27 +22,45 @@ const TeaForm = (props) => {
   //     });
   // }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const formEl = e.currentTarget;
-    const formData = new FormData(formEl);
+  const addTeaFromForm = (formData) => {
     const teaInfo = {};
+    // const { name } = formData;
+    // console.log('name', name);
     teaInfo.name = formData.get('name');
     teaInfo.origin = formData.get('origin');
     teaInfo.caffeineLevel = formData.get('caffeineLevel');
     teaInfo.image = formData.get('image');
     teaInfo.type = formData.get('type');
     teaInfo.description = formData.get('description');
-    console.log(teaInfo);
+    teaInfo.color = formData.get('color');
+    console.log('teaInfo', JSON.stringify(teaInfo));
+   // addTea(teas.push(teaInfo)); //for when not connected to backend 
 
-    return teaInfo;
+    fetch('http://localhost:3000/api/teas', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(teaInfo),
+    })
+      .then((res) => {
+        console.log('first then')
+        return res.json();
+      })
+      .then((data) => {
+        //add new card to state to update tea list
+        console.log('second then')
+        addTea(data);
+        console.log('tea added:', data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   return (
-    <form className='addTeaForm' onSubmit={handleSubmit}>
+    <form className='addTeaForm' action={addTeaFromForm}>
       <label htmlFor='name'>
         Tea name:
-        <input type='text' id='name' name='name' />
+        <input required type='text' id='name' name='name' />
       </label>
       <label htmlFor='origin'>
         Tea origin:
@@ -49,7 +68,39 @@ const TeaForm = (props) => {
       </label>
       <label htmlFor='caffeineLevel'>
         Caffeine Level:
-        <input type='text' id='caffeineLevel' name='caffeineLevel' />
+        <input
+          required
+          defaultChecked
+          type='radio'
+          name='caffeineLevel'
+          id='none'
+          value='none'
+        />
+        <label htmlFor='none'>None</label>
+        <input
+          required
+          type='radio'
+          name='caffeineLevel'
+          id='low'
+          value='low'
+        />
+        <label htmlFor='low'>Low</label>
+        <input
+          required
+          type='radio'
+          name='caffeineLevel'
+          id='medium'
+          value='medium'
+        />
+        <label htmlFor='medium'>Medium</label>
+        <input
+          required
+          type='radio'
+          name='caffeineLevel'
+          id='high'
+          value='high'
+        />
+        <label htmlFor='high'>High</label>
       </label>
       <label htmlFor='image'>
         Tea image:
@@ -61,7 +112,11 @@ const TeaForm = (props) => {
       </label>
       <label htmlFor='description'>
         Tea description:
-        <input type='text' id='description' name='description' />
+        <input required type='text' id='description' name='description' />
+      </label>
+      <label htmlFor='color'>
+        Tea color:
+        <input type='text' id='color' name='color' />
       </label>
       <button type='submit'> Spill your tea! </button>
     </form>
