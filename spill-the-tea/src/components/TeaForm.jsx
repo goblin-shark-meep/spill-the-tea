@@ -1,15 +1,47 @@
 /* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const TeaForm = (props) => {
-  const handleSubmit = (e) => {};
+  // useEffect(() => {
+  //   fetch('http://localhost:3000/cards', {
+  //     method: 'POST',
+  //     headers: { 'Content-Type:': 'application/json' },
+  //     body: JSON.stringify(teaInfo)
+  //   })
+  //     .then((res) => {
+  //       return res.json();
+  //     })
+  //     .then((data) => {
+  //       //add new card to state to update tea list
+  //       console.log('tea added:', data);
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //     });
+  // }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formEl = e.currentTarget;
+    const formData = new FormData(formEl);
+    const teaInfo = {};
+    teaInfo.name = formData.get('name');
+    teaInfo.origin = formData.get('origin');
+    teaInfo.caffeineLevel = formData.get('caffeineLevel');
+    teaInfo.image = formData.get('image');
+    teaInfo.type = formData.get('type');
+    teaInfo.description = formData.get('description');
+    console.log(teaInfo);
+
+    return teaInfo;
+  };
 
   return (
-    <form className='addTeaForm'>
+    <form className='addTeaForm' onSubmit={handleSubmit}>
       <label htmlFor='name'>
         Tea name:
-        <input type='text' id='name' name='origin' />
+        <input type='text' id='name' name='name' />
       </label>
       <label htmlFor='origin'>
         Tea origin:
