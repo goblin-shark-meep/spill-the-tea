@@ -13,11 +13,7 @@ app.use(express.json());
 // Connect Mongoose to MongoDB
 mongoose
   .connect(
-    'mongodb+srv://parkermasaru:p9N8FsKDw5nzsk7i@teacluster.t30wk3i.mongodb.net/?retryWrites=true&w=majority&appName=TeaCluster',
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
+    'mongodb+srv://parkermasaru:p9N8FsKDw5nzsk7i@teacluster.t30wk3i.mongodb.net/?retryWrites=true&w=majority&appName=TeaCluster'
   )
   .then(() => {
     console.log('✅ Connected to MongoDB');
@@ -57,6 +53,4 @@ app.use((err, req, res, next) => {
   return res.status(errorObj.status).json(errorObj.message);
 });
 
-app.listen(PORT, () => {
-  console.log('listening to 3000');
-});
+

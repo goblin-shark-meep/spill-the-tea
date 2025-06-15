@@ -15,7 +15,7 @@ export default function TeaCard({ tea, onDelete }) {
     <div
       className='tea-card'
   style={{
-    backgroundColor: color,
+    // backgroundColor: color,
     padding: '1rem',
     border: '2px solid #ccc',
     borderRadius: '20px 20px 5px 5px',
