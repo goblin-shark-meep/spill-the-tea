@@ -32,6 +32,16 @@ app.get('/', (req, res) => {
   res.send('Welcome to Spill the Tea');
 });
 
+app.get('/api/teas', TeaController.getTeas, (req, res) => {
+  if (res.locals.teas) {
+    console.log('if');
+    res.send(res.locals.teas);
+  } else {
+    console.log('else');
+    res.send('Welcome to Spill the Tea');
+  }
+});
+
 app.post('/api/teas', TeaController.createTea, (req, res, next) => {
   res.status(200).json(res.locals.teas);
 })

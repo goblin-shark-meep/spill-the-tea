@@ -37,7 +37,24 @@ TeaController.createTea = async (req, res, next) => {
   console.log('newTea', newTea);
   res.locals.teas = newTea;
   //console.log(res.locals.teas)
-  return next();
+  return res.status(201).json(newTea)
+};
+
+
+TeaController.getTeas = (req, res, next) => {
+  Tea.find({})
+    .then((teas) => {
+      console.log(teas);
+      res.locals.teas = teas;
+      next();
+    })
+    .catch((err) => {
+      next({
+        log: 'error in get teas',
+        status: 500,
+        message: { err: 'error in get teas' },
+      });
+    });
 };
 
 module.exports = TeaController;
