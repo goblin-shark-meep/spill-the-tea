@@ -79,8 +79,8 @@ function App() {
 }, []);
 
   const addTea = (teaInfo) => {
-    setTeas((prev) => [...prev, {...teaInfo }]);
-
+    setTeas((prev) => [...prev, {...teaInfo, id: Date.now() }]);
+    
   };
   const deleteTea = id => {
     fetch(`http://localhost:3000/api/teas/${id}`, { method: 'DELETE' })
