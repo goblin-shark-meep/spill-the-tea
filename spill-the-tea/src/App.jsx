@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import './App.css'
+import { useState } from 'react';
+import './App.css';
 import TeaForm from './components/TeaForm';
 import TeaList from './components/TeaList';
 import { useEffect } from 'react';
@@ -42,7 +42,7 @@ import { useEffect } from 'react';
 //   type: 'Green Tea',
 //   origin: 'Japan',
 //   color: '#d0f0c0',
-//   image: 'https://www.harmonyorganictea.com/attachment/product/1668741152PdESa.png', 
+//   image: 'https://www.harmonyorganictea.com/attachment/product/1668741152PdESa.png',
 //   description: 'A smooth and earthy green tea made from finely ground matcha powder, perfect for focus and calm.'
 // },
 // {
@@ -65,33 +65,71 @@ import { useEffect } from 'react';
 // }
 // ];
 
-
 function App() {
   //const [count, setCount] = useState(0);
   // array of teas change back to ([]) when ready to add
-  const[teas, setTeas] = useState([]);
+  const [teas, setTeas] = useState([]);
   // add tea will be passed to TeaForm
   useEffect(() => {
     fetch('http://localhost:3000/api/teas')
-      .then(res => res.json())
-      .then(data => setTeas(data))
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('tea data', data);
+        setTeas(data);
+      })
       .catch(console.error);
-}, []);
+  }, []);
 
   const addTea = (teaInfo) => {
-    setTeas((prev) => [...prev, {...teaInfo, id: Date.now() }]);
-    
+    setTeas((prev) => [...prev, { ...teaInfo, id: Date.now() }]);
   };
-  const deleteTea = id => {
-    fetch(`http://localhost:3000/api/teas/${id}`, { method: 'DELETE' })
-    .then(() => setTeas(prev => prev.filter(t => t.id !== id)))
+
+  const [teaBeingEdited, setTeaBeingEdited] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
+
+  const updateTea = (_id, updatedTea) => {
+    fetch(`http://localhost:3000/api/teas/${_id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updatedTea)
+    })
+    .then(res => res.json())
+    .then((savedTea) => {
+      setTeas((prev) =>
+      prev.map((tea) =>
+      tea._id === savedTea._id ? savedTea : tea
+    )
+  );
+  setTeaBeingEdited(null);
+    })
     .catch(console.error);
+}
+
+  const deleteTea = (_id) => {
+    console.log('deleted tea id frontend', _id);
+    fetch(`http://localhost:3000/api/teas/${_id}`, { method: 'DELETE' })
+      .then(() => setTeas((prev) => prev.filter((t) => t._id !== _id)))
+      .catch(console.error);
   };
   return (
     <div>
       <h1>Spill the Tea</h1>
-      <TeaForm addTea={addTea} teas={teas} />
-      <TeaList teas={teas} onDelete={deleteTea} />
+      <TeaForm
+        addTea={addTea}
+        updateTea={updateTea}
+        teaToEdit={teaBeingEdited}
+        teas={teas}
+        isPopUp={false}
+    />
+
+      <TeaList
+        teas={teas}
+        onDelete={deleteTea}
+        onEdit={setTeaBeingEdited}
+      />
+
     </div>
   );
 }

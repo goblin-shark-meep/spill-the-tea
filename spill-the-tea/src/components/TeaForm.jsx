@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { useState, useEffect } from 'react';
 
-const TeaForm = ({ teas, addTea }) => {
+const TeaForm = ({ teas, addTea, isPopUp, updateTea, teaToEdit }) => {
   if (!teas) teas = [];
   // useEffect(() => {
   //   fetch('http://localhost:3000/cards', {
@@ -60,7 +60,12 @@ const TeaForm = ({ teas, addTea }) => {
     <form className='addTeaForm' action={addTeaFromForm}>
       <label htmlFor='name'>
         <span>Tea name:</span>
-        <input required type='text' id='name' name='name' />
+        <input
+          required
+          type='text'
+          id='name'
+          name='name'
+        />
       </label>
       <label htmlFor='origin'>
         <span>Tea origin:</span>
@@ -69,7 +74,6 @@ const TeaForm = ({ teas, addTea }) => {
       <label htmlFor='caffeineLevel'>
         <span> Caffeine Level:</span>
         <input
-          required
           defaultChecked
           type='radio'
           name='caffeineLevel'
@@ -112,7 +116,12 @@ const TeaForm = ({ teas, addTea }) => {
       </label>
       <label htmlFor='description'>
         <span>Tea description:</span>
-        <input required type='text' id='description' name='description' />
+        <input
+          required
+          type='text'
+          id='description'
+          name='description'
+        />
       </label>
       <label htmlFor='color'>
         <span>Tea color:</span>
