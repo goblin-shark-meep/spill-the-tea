@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { useState, useEffect } from 'react';
 
-const TeaForm = ({ teas, addTea, isPopUp, updateTea, teaToEdit }) => {
+const TeaForm = ({ teas, addTea, updateTea, teaToEdit }) => {
   if (!teas) teas = [];
   // useEffect(() => {
   //   fetch('http://localhost:3000/cards', {
