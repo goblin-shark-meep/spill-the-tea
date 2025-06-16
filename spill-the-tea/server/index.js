@@ -28,6 +28,7 @@ app.get('/', (req, res) => {
   res.send('Welcome to Spill the Tea');
 });
 
+// GET ALL TEA DATA
 app.get('/api/teas', TeaController.getTeas, (req, res) => {
   if (res.locals.teas) {
     console.log('if');
@@ -38,9 +39,16 @@ app.get('/api/teas', TeaController.getTeas, (req, res) => {
   }
 });
 
-app.post('/api/teas', TeaController.createTea, (req, res, next) => {
-  res.status(200).json(res.locals.teas);
-})
+// CONTROLLERS
+
+//CREATE A TEA
+app.post('/api/teas', TeaController.createTea);
+
+
+//DELETE A TEA
+app.delete('/api/teas/:id', TeaController.deleteTea);
+
+app.patch('/api/teas/:id', TeaController.updateTea);
 
 app.use((err, req, res, next) => {
   const defaultErr = {
@@ -52,5 +60,3 @@ app.use((err, req, res, next) => {
   console.log(errorObj.log);
   return res.status(errorObj.status).json(errorObj.message);
 });
-
-

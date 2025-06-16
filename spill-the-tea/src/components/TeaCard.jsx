@@ -1,7 +1,7 @@
 import React from 'react';
-export default function TeaCard({ tea, onDelete }) {
+export default function TeaCard({ tea, onDelete, onEdit, setShowPopUp }) {
   const {
-    id,
+    _id,
     name,
     origin,
     caffeineLevel,
@@ -55,9 +55,18 @@ export default function TeaCard({ tea, onDelete }) {
         <strong>Type:</strong> {type}
       </p>
       <p className='tea-card__description'>{description}</p>
-      <button className='tea-card__remove' onClick={() => onDelete(id)}>
-        Remove
-      </button>
+      <div className='card-buttons'>
+        <button className='tea-card__remove' onClick={() => onDelete(_id)}>
+          Remove
+        </button>
+        <button className='tea-card-edit' onClick={() => {
+          onEdit(tea) 
+          setShowPopUp(true);
+        }}>
+          Edit
+        </button>
+
+      </div>
       <img src='/spilled-coffee-cups.png' className='spilled-coffee-cups'></img>
     </div>
   );
