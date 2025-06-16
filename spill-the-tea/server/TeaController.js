@@ -43,7 +43,7 @@ TeaController.createTea = async (req, res, next) => {
 TeaController.getTeas = (req, res, next) => {
   Tea.find({})
     .then((teas) => {
-      console.log(teas);
+      //console.log(teas);
       res.locals.teas = teas;
       next();
     })
@@ -58,13 +58,13 @@ TeaController.getTeas = (req, res, next) => {
 
 TeaController.deleteTea = (req, res, next) => {
   // const { id } = req.params;
-  
+
   Tea.findByIdAndDelete(req.params.id)
     .then((tea) => {
-      console.log('deleted tea', tea);
+      //console.log('deleted tea', tea);
       res.locals.deletedTea = tea;
       res.status(200).json(res.locals.teas);
-      // return next() 
+      // return next()
     })
     .catch((err) => {
       next({
@@ -76,13 +76,13 @@ TeaController.deleteTea = (req, res, next) => {
 };
 
 TeaController.updateTea = async (req, res, next) => {
-
-   const { id } = req.params;
-   const { update } = req.body;
-
-   // findbyidandupdate(original, updatedVersion)
-
-   try{
+  console.log('entering updateTea in tea controller');
+  const { id } = req.params;
+  const update = req.body;
+  // findbyidandupdate(original, updatedVersion)
+  console.log('id ', id);
+  console.log('update', update);
+  try {
     const updatedTea = await Tea.findByIdAndUpdate(
       id,
       { $set: update },
@@ -90,26 +90,25 @@ TeaController.updateTea = async (req, res, next) => {
       // run validators in our Tea Schema?
       { new: true, runValidators: false }
     );
-    res.locals.teas = updatedTea;
-    res.status(200).json(res.locals.teas);
-   }
-   catch(err) {
+    //res.locals.teas = updatedTea;
+    res.status(200).json(updatedTea);
+  } catch (err) {
     return next({
       log: 'Error in TeaController.updateTea' + err,
       status: 400,
       message: { err: 'Failed to update tea' },
     });
   }
-}
+};
 
-  // Tea.findByIdAndUpdate(
-  //   // { name: req.body.name },
-  //   // { origin: req.body.origin },
-  //   // { caffeineLevel: req.body.caffeineLevel },
-  //   // { image: req.body.image },
-  //   // { type: req.body.type },
-  //   // { description: req.body.description },
-  //   // { color: req.body.color }
-  // )
+// Tea.findByIdAndUpdate(
+//   // { name: req.body.name },
+//   // { origin: req.body.origin },
+//   // { caffeineLevel: req.body.caffeineLevel },
+//   // { image: req.body.image },
+//   // { type: req.body.type },
+//   // { description: req.body.description },
+//   // { color: req.body.color }
+// )
 
 module.exports = TeaController;

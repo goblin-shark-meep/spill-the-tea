@@ -1,28 +1,49 @@
 import React from 'react';
 import { useState } from 'react';
 
-const TeaPopUp = ({ showPopUp, setShowPopUp, setIdOfEditCard }) => {
+const TeaPopUp = ({
+  showPopUp,
+  setShowPopUp,
+  setIdOfEditCard,
+  _id,
+  updateTea,
+}) => {
   //   console.log('TeaPopUp');
   //   return (
   //     <div style={{ background: 'pink' }}>
   //       <h1>This is pop up</h1>
   //     </div>
   //   );
-  const updateTea = (formData) => {
+  const updateTeaFromForm = (formData) => {
     const teaInfo = {};
     // const { name } = formData;
     // console.log('name', name);
-    teaInfo.name = formData.get('name');
-    teaInfo.origin = formData.get('origin');
-    teaInfo.caffeineLevel = formData.get('caffeineLevel');
-    teaInfo.image = formData.get('image');
-    teaInfo.type = formData.get('type');
-    teaInfo.description = formData.get('description');
-    teaInfo.color = formData.get('color');
+    if (formData.get('name') != '') {
+      teaInfo.name = formData.get('name');
+    }
+    if (formData.get('origin') != '') {
+      teaInfo.origin = formData.get('origin');
+    }
+    if (formData.get('caffeineLevel') != '') {
+      teaInfo.caffeineLevel = formData.get('caffeineLevel');
+    }
+    if (formData.get('image') != '') {
+      teaInfo.image = formData.get('image');
+    }
+    if (formData.get('type') != '') {
+      teaInfo.type = formData.get('type');
+    }
+    if (formData.get('description') != '') {
+      teaInfo.description = formData.get('description');
+    }
+    if (formData.get('color') != '') {
+      teaInfo.color = formData.get('color');
+    }
+
     console.log('teaInfo', JSON.stringify(teaInfo));
     // addTea(teas.push(teaInfo)); //for when not connected to backend
-
-    // fetch('http://localhost:3000/api/teas', {
+    updateTea(_id, teaInfo);
+    // fetch(`http://localhost:3000/api/teas/${_id}`, {
     //   method: 'PATCH',
     //   headers: { 'Content-Type': 'application/json' },
     //   body: JSON.stringify(teaInfo),
@@ -36,16 +57,34 @@ const TeaPopUp = ({ showPopUp, setShowPopUp, setIdOfEditCard }) => {
     //     console.log('second then');
     //     addTea(data);
     //     console.log('tea added:', data);
+
+    //     // const addTea = (teaInfo) => {
+    //     //     setTeas((prev) => [...prev, { ...teaInfo, id: Date.now() }]);
+    //     //   };
     //   })
     //   .catch((err) => {
     //     console.error(err);
     //   });
+
+    // const updateTea = (_id, updatedTea) => {
+    // fetch(`http://localhost:3000/api/teas/${_id}`, {
+    //   method: 'PATCH',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify(teaInfo),
+    // })
+    //   .then((res) => res.json())
+    //   .then((savedTea) => {
+    //     setTeas((prev) =>
+    //       prev.map((tea) => (tea._id === savedTea._id ? savedTea : tea))
+    //     );
     setShowPopUp(false);
     setIdOfEditCard(null);
+
+    //};
   };
 
   return (
-    <form className='addTeaForm' action={updateTea}>
+    <form className='addTeaForm' action={updateTeaFromForm}>
       <label htmlFor='name'>
         <span>Tea name:</span>
         <input type='text' id='name' name='name' />

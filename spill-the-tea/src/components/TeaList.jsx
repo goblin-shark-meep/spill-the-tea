@@ -8,6 +8,7 @@ export default function TeaList({
   onEdit,
   showPopUp,
   setShowPopUp,
+  updateTea,
 }) {
   // if there are no teas then display message
   if (teas.length === 0) {
@@ -32,6 +33,7 @@ export default function TeaList({
           onEdit={onEdit}
           showPopUp={showPopUp}
           setShowPopUp={setShowPopUp}
+          updateTea={updateTea}
         />
       ))}
     </div>

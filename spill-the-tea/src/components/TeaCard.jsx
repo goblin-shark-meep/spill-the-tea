@@ -9,6 +9,7 @@ export default function TeaCard({
   onEdit,
   showPopUp,
   setShowPopUp,
+  updateTea,
 }) {
   const [idOfEditCard, setIdOfEditCard] = useState('');
   const {
@@ -40,6 +41,8 @@ export default function TeaCard({
       showPopUp={showPopUp}
       setShowPopUp={setShowPopUp}
       setIdOfEditCard={setIdOfEditCard}
+      _id={_id}
+      updateTea={updateTea}
     />
   ) : (
     <div

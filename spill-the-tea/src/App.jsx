@@ -34,8 +34,12 @@ function App() {
       },
       body: JSON.stringify(updatedTea),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        console.log('entered first then update tea here is the res', res);
+        return res.json();
+      })
       .then((savedTea) => {
+        console.log('entered second then updateTea', savedTea);
         setTeas((prev) =>
           prev.map((tea) => (tea._id === savedTea._id ? savedTea : tea))
         );
@@ -66,6 +70,7 @@ function App() {
         onEdit={setTeaBeingEdited}
         showPopUp={showPopUp}
         setShowPopUp={setShowPopUp}
+        updateTea={updateTea}
       />
     </div>
   );
