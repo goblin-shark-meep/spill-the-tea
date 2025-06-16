@@ -57,7 +57,7 @@ export default function TeaCard({
         //width: '200px',
         //margin: '1rem auto',
         // position: 'relative',
-        //...(color ? { borderColor: color } : {})
+        // ...(color ? { borderColor: color } : {})
         //height: { image ? '20rem' : '15rem' },
         ...(image ? { height: '27rem' } : { height: '24rem' }),
       }}
@@ -109,7 +109,7 @@ export default function TeaCard({
         {/* {showPopUp ? <TeaPopUp /> : null} */}
         {/* { showPopUp && <TeaPopUp />} */}
       </div>
-      <img src='/spilled-coffee-cups.png' className='spilled-coffee-cups'></img>
+      {/* <img src='/spilled-coffee-cups.png' className='spilled-coffee-cups'></img> */}
     </div>
   );
 }

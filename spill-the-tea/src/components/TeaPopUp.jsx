@@ -128,10 +128,10 @@ const TeaPopUp = ({
         />
         <label htmlFor='high'>High</label>
       </label>
-      <label htmlFor='image'>
+      {/* <label htmlFor='image'>
         <span>Tea image:</span>
         <input type='text' id='image' name='image' />
-      </label>
+      </label> */}
       <label htmlFor='type'>
         <span>Tea type:</span>
         <input type='text' id='type' name='type' />
