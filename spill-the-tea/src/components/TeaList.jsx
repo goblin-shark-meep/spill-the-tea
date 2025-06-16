@@ -2,8 +2,14 @@ import React from 'react';
 import TeaCard from './TeaCard';
 import { useState } from 'react';
 
-export default function TeaList({ teas, onDelete, onEdit }) {
-  const [showPopUp, setShowPopUp] = useState(false);
+export default function TeaList({
+  teas,
+  onDelete,
+  onEdit,
+  showPopUp,
+  setShowPopUp,
+  updateTea,
+}) {
   // if there are no teas then display message
   if (teas.length === 0) {
     return <p className='tea-list__empty'>No teas added yet.</p>;
@@ -20,12 +26,14 @@ export default function TeaList({ teas, onDelete, onEdit }) {
     >
       {teas.map((tea) => (
         // transforms each object into react element
-         <TeaCard
+        <TeaCard
           key={tea._id}
           tea={tea}
           onDelete={onDelete}
           onEdit={onEdit}
+          showPopUp={showPopUp}
           setShowPopUp={setShowPopUp}
+          updateTea={updateTea}
         />
       ))}
     </div>

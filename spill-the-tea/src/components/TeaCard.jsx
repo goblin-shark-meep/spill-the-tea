@@ -1,5 +1,17 @@
 import React from 'react';
-export default function TeaCard({ tea, onDelete, onEdit, setShowPopUp }) {
+import TeaPopUp from './TeaPopUp';
+import TeaForm from './TeaForm';
+import { useState } from 'react';
+TeaForm;
+export default function TeaCard({
+  tea,
+  onDelete,
+  onEdit,
+  showPopUp,
+  setShowPopUp,
+  updateTea,
+}) {
+  const [idOfEditCard, setIdOfEditCard] = useState('');
   const {
     _id,
     name,
@@ -10,7 +22,29 @@ export default function TeaCard({ tea, onDelete, onEdit, setShowPopUp }) {
     description,
     color, //optional
   } = tea;
-  return (
+
+  function handleEdit(e) {
+    console.log('name', name);
+    console.log('e.target', e.target._id);
+    console.log('enter handle edit');
+    setIdOfEditCard(_id);
+    setShowPopUp(true);
+    // {
+    //   showPopUp ? <TeaPopUp /> : <></>;
+    // }
+    //return <div>hi</div>;
+    // return <TeaForm />;
+  }
+
+  return showPopUp && idOfEditCard === _id ? (
+    <TeaPopUp
+      showPopUp={showPopUp}
+      setShowPopUp={setShowPopUp}
+      setIdOfEditCard={setIdOfEditCard}
+      _id={_id}
+      updateTea={updateTea}
+    />
+  ) : (
     <div
       className='tea-card'
       style={{
@@ -59,13 +93,21 @@ export default function TeaCard({ tea, onDelete, onEdit, setShowPopUp }) {
         <button className='tea-card__remove' onClick={() => onDelete(_id)}>
           Remove
         </button>
-        <button className='tea-card-edit' onClick={() => {
-          onEdit(tea) 
-          setShowPopUp(true);
-        }}>
+        <button
+          className='tea-card-edit'
+          onClick={handleEdit}
+          //   () => {
+          //   console.log('edit clicked');
+          //   //onEdit(tea);
+          //   setShowPopUp(true);
+          // }}
+        >
           Edit
         </button>
-
+        {/* {showComponent && <MyTargetComponent />} */}
+        {/* {showPopUp ? <TeaPopUp /> : <></>} */}
+        {/* {showPopUp ? <TeaPopUp /> : null} */}
+        {/* { showPopUp && <TeaPopUp />} */}
       </div>
       <img src='/spilled-coffee-cups.png' className='spilled-coffee-cups'></img>
     </div>
